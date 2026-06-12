@@ -1,0 +1,19 @@
+name: POE2 Survey Promotion
+
+on:
+  schedule:
+    # 每周一、周四 UTC 9点 = 北京时间17点
+    - cron: '0 9 * * 1,4'
+  workflow_dispatch:
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post Survey to Discord
+        run: |
+          curl -X POST "${{ vars.DISCORD_WEBHOOK_URL }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "content": "📋 **POE2 Crafting & Trade Survey**\n\nHey everyone! Help us improve POE2 crafting tools by sharing your experience.\n\n👉 Fill out the survey: https://tally.so/r/VL4AEM\n\nTakes about 3 minutes!\n\nTopics:\n• Your playstyle (SSF/Trader/Crafter/Flipper)\n• Crafting challenges you face\n• Tools you use (poe.ninja, CraftofExile, etc.)\n• What features you want\n\nPlease share with other POE2 players! 🎮\n\n#POE2 #PathOfExile"
+            }'
